@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <!-- 文字コードをUTF-8に設定 -->
+  <meta charset="UTF-8">
+  <!-- ビューポートを設定 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ブラウザのタブに表示されるタイトル -->
+  <title>複数スポーツ対応 作戦盤システム</title>
+  <!-- CSSファイルを読み込む -->
+  <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+  <!-- ========================================
+     操作用メニューボタン
+     ======================================== -->
+
+  <div class="menu">
+
+    <!-- オールコートに切り替えるボタン -->
+    <button onclick="changeCourt('full')">
+      オールコート
+    </button>
+
+    <!-- ハーフコートに切り替えるボタン -->
+    <button onclick="changeCourt('half')">
+      ハーフコート
+    </button>
+
+    <button onclick="selectFormation()">
+      フォーメーション選択
+    </button>
+
+    <div id="formationMenu" style="display:none;">
+
+
+      <div id="formationList"></div>
+
+      <button onclick="closeFormationMenu()">
+        閉じる
+      </button>
+    </div>
+
+    <!-- フォーメーションを追加するボタン -->
+    <button onclick="addFormation()">
+      フォーメーション追加
+    </button>
+
+    <button onclick="deleteFormation()">
+      フォーメーション削除
+    </button>
+
+    <!-- 直前に行った操作を取り消すボタン -->
+    <button onclick="undoMove()">
+      1つ前に戻る
+    </button>
+
+    <!-- 作戦盤を初期状態に戻すボタン -->
+    <button onclick="resetBoard()">
+      リセット
+    </button>
+
+
+
+    <!-- 線を描く機能のON/OFFを切り替えるボタン -->
+    <button onclick="toggleDrawMode()">
+      線描画ON/OFF
+    </button>
+
+    <!-- 選択した線を1本削除するボタン -->
+    <button onclick="eraseLine()">
+      🧹 1本消す
+    </button>
+
+    <!-- 作戦盤上にある線をすべて削除するボタン -->
+    <button onclick="clearLines()">
+      ❌ 線を全削除
+    </button>
+
+    <!-- 消しゴム機能のON/OFFを切り替えるボタン -->
+    <button onclick="toggleEraseMode()">
+      🧽 消しゴム
+    </button>
+
+    <!-- 味方選手を1人追加するボタン -->
+    <button onclick="addMyPlayer()">
+      ➕味方追加
+    </button>
+
+    <!-- 相手選手を1人追加するボタン -->
+    <button onclick="addEnemyPlayer()">
+      ➕相手追加
+    </button>
+
+    <!-- 選択している選手を削除するボタン -->
+    <button onclick="deleteSelectedPlayer()">
+      ➖選択選手削除
+    </button>
+
+
+  </div>
+
+  <!-- ========================================
+     作戦盤を表示する場所
+     JavaScriptのKonva.jsを使って、
+     この中にコートや選手などを表示する
+     ======================================== -->
+  <div id="container"></div>
+
+  <!-- ========================================
+     Konva.jsを読み込む
+     コートや選手などの図形を画面上に表示したり、
+     マウスで動かしたりするために使用する
+     ======================================== -->
+  <script src="https://unpkg.com/konva@9/konva.min.js"></script>
+
+  <!-- ========================================
+     自分で作成したJavaScriptファイル
+     ======================================== -->
+
+  <!-- システム全体の基本的な処理 -->
+  <script src="js/script.js"></script>
+
+  <!-- 選手の追加・削除・移動などを管理 -->
+  <script src="js/player.js"></script>
+
+  <!-- ベンチにいる選手などの処理を管理 -->
+  <script src="js/bench.js"></script>
+
+  <!-- 線を描く・消すなどの処理を管理 -->
+  <script src="js/draw.js"></script>
+
+  <!-- 録画・停止・再生などの処理を管理 -->
+  <script src="js/record.js"></script>
+
+  <!-- コートの表示や切り替えなどを管理 -->
+  <script src="js/court.js"></script>
+
+
+
+</body>
+
+</html>
