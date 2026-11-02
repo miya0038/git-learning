@@ -59,20 +59,13 @@ input {
 }
 
 #container {
-  position: relative;
   width: 100%;
   height: calc(100dvh - 90px);
-  min-height: 220px;
-  margin: 0 auto;
-  background-image: url("バスケコート.png");
-  background-size: 100% 100%;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-color: white;
-  border-radius: 6px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   overflow: hidden;
   touch-action: none;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
 }
 
 @media (min-width: 1025px) {

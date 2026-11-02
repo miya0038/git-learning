@@ -11,29 +11,32 @@ let courtTransformer;
 // コート編集モードがONかOFFかを管理する変数
 let courtEditMode = false;
 
+// コート画像を読み込む
+const fullCourtImage = new Image();
+fullCourtImage.src = "バスケコート.png";
+
+const halfCourtImage = new Image();
+halfCourtImage.src = "ハーフコート.png";
+
+// コート画像の読み込みが完了したら再描画
+fullCourtImage.onload = () => {
+  if (currentCourt === "full") {
+    drawCourt();
+  }
+};
+
+halfCourtImage.onload = () => {
+  if (currentCourt === "half") {
+    drawCourt();
+  }
+};
+
 
 // ===================================
 // コート描画
 // ===================================
 
 function drawCourt() {
-
-  // ===================================
-  // コート画像を切り替える
-  // ===================================
-
-  if (currentCourt === "full") {
-
-    document.getElementById("container").style.backgroundImage =
-      'url("バスケコート.png")';
-
-  } else if (currentCourt === "half") {
-
-    document.getElementById("container").style.backgroundImage =
-      'url("ハーフコート.png")';
-
-  }
-
 
   // drawCourt関数が実行されたことを確認
   console.log("drawCourtが実行されました");
@@ -47,6 +50,39 @@ function drawCourt() {
   // ベンチ選手そのものは削除せず、
   // 一度レイヤーから外すだけにする
   courtLayer.removeChildren();
+
+  // 現在選択されているコート画像を取得
+  const courtImage =
+    currentCourt === "full"
+      ? fullCourtImage
+      : halfCourtImage;
+
+  // コート画像を元の縦横比で表示
+  if (courtImage.complete && courtImage.naturalWidth > 0) {
+
+    const imageWidth = courtImage.naturalWidth;
+    const imageHeight = courtImage.naturalHeight;
+
+    // コート画像を作戦盤の範囲内に収める
+    const imageScale = Math.min(
+      (stageWidth - 145) / imageWidth,
+      stageHeight / imageHeight
+    );
+
+    const displayWidth = imageWidth * imageScale;
+    const displayHeight = imageHeight * imageScale;
+
+    const konvaCourtImage = new Konva.Image({
+      image: courtImage,
+      x: 75 + (stageWidth - 145 - displayWidth) / 2,
+      y: (stageHeight - displayHeight) / 2,
+      width: displayWidth,
+      height: displayHeight,
+      listening: false
+    });
+
+    courtLayer.add(konvaCourtImage);
+  }
 
 
   // ===================================

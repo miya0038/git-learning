@@ -30,16 +30,9 @@ halfCourtImg.src = "ハーフコート.png";
 
 // Konvaの描画領域を作成
 const stage = new Konva.Stage({
-
-    // HTML側のcontainer要素に表示
     container: 'container',
-
-    // 画面の横幅に合わせる
-    width: window.innerWidth,
-
-    // 画面の縦幅に合わせる
-    height: window.innerHeight
-
+    width: document.getElementById('container').clientWidth,
+    height: document.getElementById('container').clientHeight
 });
 
 
@@ -85,59 +78,50 @@ stage.add(drawLayer);
 // ===================================
 function resizeBoard() {
     const container = document.getElementById("container");
-    const menu = document.querySelector(".menu");
-    if (!container) return;
-
-    const menuHeight = menu
-        ? menu.getBoundingClientRect().height
-        : 0;
-
-    const availableHeight = Math.max(
-        220,
-        window.innerHeight - menuHeight
-    );
-
-    container.style.height = availableHeight + "px";
-
+    console.log("resizeBoard実行");
+    console.log("画面領域:", container.clientWidth, container.clientHeight);
+    console.log("作戦盤の倍率:", boardScale);
+    console.log("コート画像のサイズ:", fullCourtImage.naturalWidth, fullCourtImage.naturalHeight);
     const containerWidth = container.clientWidth;
     const containerHeight = container.clientHeight;
 
-    if (containerWidth <= 0 || containerHeight <= 0) return;
-
-    // PC・iPad共通で、縦横の画面内に収まる倍率を計算
-    boardScale = Math.min(
+    // 元のコートサイズに対する倍率
+    const boardScale = Math.min(
         containerWidth / stageWidth,
         containerHeight / stageHeight
     );
 
-    boardOffsetX = (containerWidth - stageWidth * boardScale) / 2;
-    boardOffsetY = (containerHeight - stageHeight * boardScale) / 2;
-
+    // ステージ自体は表示領域に合わせる
     stage.width(containerWidth);
     stage.height(containerHeight);
 
+    // コート・選手・ベンチ・描画を同じ倍率にする
     [courtLayer, benchLayer, drawLayer].forEach(layer => {
-        layer.scale({ x: boardScale, y: boardScale });
-        layer.position({ x: boardOffsetX, y: boardOffsetY });
+        layer.scale({
+            x: boardScale,
+            y: boardScale
+        });
+
+        layer.position({
+            x: (containerWidth - stageWidth * boardScale) / 2,
+            y: (containerHeight - stageHeight * boardScale) / 2
+        });
+
         layer.batchDraw();
     });
 
     stage.batchDraw();
 }
 
-// 画面座標を作戦盤の論理座標（1930 × 950）に変換
-function getBoardPointerPosition() {
-    const pointer = stage.getPointerPosition();
-    if (!pointer) return null;
-    return {
-        x: (pointer.x - boardOffsetX) / boardScale,
-        y: (pointer.y - boardOffsetY) / boardScale
-    };
-}
-
-resizeBoard();
 window.addEventListener("resize", resizeBoard);
-window.addEventListener("orientationchange", () => setTimeout(resizeBoard, 250));
+
+window.addEventListener("resize", resizeBoard);
+
+// 起動時に調整
+resizeBoard();
+
+// 画面サイズが変わったときにも調整
+window.addEventListener("resize", resizeBoard);
 
 
 // ===================================
