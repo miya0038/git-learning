@@ -80,8 +80,8 @@ function resizeBoard() {
     const container = document.getElementById("container");
     console.log("resizeBoard実行");
     console.log("画面領域:", container.clientWidth, container.clientHeight);
-    console.log("作戦盤の倍率:", boardScale);
-    console.log("コート画像のサイズ:", fullCourtImage.naturalWidth, fullCourtImage.naturalHeight);
+    // console.log("作戦盤の倍率:", boardScale);
+    //console.log("コート画像のサイズ:", fullCourtImage.naturalWidth, fullCourtImage.naturalHeight);
     const containerWidth = container.clientWidth;
     const containerHeight = container.clientHeight;
 
