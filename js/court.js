@@ -11,19 +11,48 @@ let courtTransformer;
 // コート編集モードがONかOFFかを管理する変数
 let courtEditMode = false;
 
-// コート画像を読み込む
+// ===================================
+// コート画像の読み込み
+// ===================================
+
+// 全面コート画像
 const fullCourtImage = new Image();
-fullCourtImage.src = "バスケコート.png";
 
-const halfCourtImage = new Image();
-halfCourtImage.src = "ハーフコート.png";
-
-// コート画像の読み込みが完了したら再描画
+// 全面コート画像の読み込み完了時
 fullCourtImage.onload = () => {
+  console.log("全面コート画像の読み込み成功");
+  console.log("画像サイズ:", fullCourtImage.naturalWidth, fullCourtImage.naturalHeight);
+
   if (currentCourt === "full") {
     drawCourt();
   }
 };
+
+// 全面コート画像の読み込み失敗時
+fullCourtImage.onerror = () => {
+  console.error("全面コート画像の読み込み失敗");
+};
+
+// 半面コート画像
+const halfCourtImage = new Image();
+
+// 半面コート画像の読み込み完了時
+halfCourtImage.onload = () => {
+  console.log("半面コート画像の読み込み成功");
+
+  if (currentCourt === "half") {
+    drawCourt();
+  }
+};
+
+// 半面コート画像の読み込み失敗時
+halfCourtImage.onerror = () => {
+  console.error("半面コート画像の読み込み失敗");
+};
+
+// 最後に画像の読み込みを開始
+fullCourtImage.src = "./バスケコート.png";
+halfCourtImage.src = "./ハーフコート.png";
 
 halfCourtImage.onload = () => {
   if (currentCourt === "half") {

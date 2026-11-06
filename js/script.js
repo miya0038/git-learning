@@ -117,16 +117,14 @@ function resizeBoard() {
     stage.batchDraw();
 }
 
-window.addEventListener("resize", resizeBoard);
-
-window.addEventListener("resize", resizeBoard);
-
-// 起動時に調整
 resizeBoard();
 
-// 画面サイズが変わったときにも調整
 window.addEventListener("resize", resizeBoard);
 
+// コート画像の読み込み完了後に描画
+window.addEventListener("load", function () {
+    drawCourt();
+});
 
 // ===================================
 // データ

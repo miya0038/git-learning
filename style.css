@@ -63,6 +63,10 @@ input {
   height: calc(100dvh - 52px);
   overflow: hidden;
   touch-action: none;
+
+  /* 背景色 */
+  background-color: #E8E8E8;
+
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
