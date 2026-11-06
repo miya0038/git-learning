@@ -28,6 +28,12 @@ halfCourtImg.src = "ハーフコート.png";
 // KonvaのStageを作成
 // ===================================
 
+// 作戦盤全体の幅
+const stageWidth = 2150;
+
+// 作戦盤全体の高さ
+const stageHeight = 950;
+
 // Konvaの描画領域を作成
 const stage = new Konva.Stage({
     container: 'container',
@@ -36,11 +42,7 @@ const stage = new Konva.Stage({
 });
 
 
-// 作戦盤全体の幅
-const stageWidth = 2150;
 
-// 作戦盤全体の高さ
-const stageHeight = 950;
 
 // ベンチ部分の幅
 const benchWidth = 70;
@@ -89,7 +91,9 @@ function resizeBoard() {
     const boardScale = Math.min(
         containerWidth / stageWidth,
         containerHeight / stageHeight
-    );
+    ) * 1.1;
+
+
 
     // ステージ自体は表示領域に合わせる
     stage.width(containerWidth);
