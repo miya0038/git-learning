@@ -1,30 +1,4 @@
 // ===================================
-// Stage（作戦盤の画面）作成
-// ===================================
-
-// オールコート用の画像を作成
-const fullCourtImg = new Image();
-
-// ハーフコート用の画像を作成
-const halfCourtImg = new Image();
-
-// オールコート画像の読み込みが完了したときの処理
-window.addEventListener("load", function () {
-    drawCourt();
-
-
-
-});
-
-// オールコート画像の読み込み先を指定
-fullCourtImg.src = "バスケコート.png";
-
-// ハーフコート画像の読み込み先を指定
-halfCourtImg.src = "ハーフコート.png";
-
-
-
-// ===================================
 // KonvaのStageを作成
 // ===================================
 
@@ -51,6 +25,10 @@ const benchWidth = 70;
 let boardScale = 1;
 let boardOffsetX = 0;
 let boardOffsetY = 0;
+
+// コート画像だけの位置調整
+const courtOffsetX = 0;
+const courtOffsetY = 50;
 
 // 作戦線を保存する配列
 let lines = [];
@@ -93,6 +71,10 @@ function resizeBoard() {
         containerHeight / stageHeight
     ) * 1.1;
 
+    // 作戦盤の表示位置を計算
+    boardOffsetX = (containerWidth - stageWidth * boardScale) / 2;
+    boardOffsetY = (containerHeight - stageHeight * boardScale) / 2;
+
 
 
     // ステージ自体は表示領域に合わせる
@@ -107,8 +89,8 @@ function resizeBoard() {
         });
 
         layer.position({
-            x: (containerWidth - stageWidth * boardScale) / 2,
-            y: (containerHeight - stageHeight * boardScale) / 2
+            x: boardOffsetX,
+            y: boardOffsetY
         });
 
         layer.batchDraw();
@@ -120,6 +102,26 @@ function resizeBoard() {
 resizeBoard();
 
 window.addEventListener("resize", resizeBoard);
+
+// ===================================
+// マウス・タッチの座標を取得
+// ===================================
+function getBoardPointerPosition() {
+
+    // マウスの現在位置を取得
+    const pointer = stage.getPointerPosition();
+
+    // 位置を取得できない場合
+    if (!pointer) {
+        return null;
+    }
+
+    // 画面上の座標を作戦盤上の座標に変換
+    return {
+        x: (pointer.x - boardOffsetX) / boardScale,
+        y: (pointer.y - boardOffsetY) / boardScale
+    };
+}
 
 // コート画像の読み込み完了後に描画
 window.addEventListener("load", function () {
@@ -139,7 +141,6 @@ let currentSport = "basketball";
 // half = ハーフコート
 let currentCourt = "full";
 
-// ..
 // 用のコマ位置
 let fullCourtPositions = [];
 

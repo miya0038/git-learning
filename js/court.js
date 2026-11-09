@@ -18,10 +18,17 @@ let courtEditMode = false;
 // 全面コート画像
 const fullCourtImage = new Image();
 
+// 半面コート画像
+const halfCourtImage = new Image();
+
 // 全面コート画像の読み込み完了時
 fullCourtImage.onload = () => {
   console.log("全面コート画像の読み込み成功");
-  console.log("画像サイズ:", fullCourtImage.naturalWidth, fullCourtImage.naturalHeight);
+  console.log(
+    "画像サイズ:",
+    fullCourtImage.naturalWidth,
+    fullCourtImage.naturalHeight
+  );
 
   if (currentCourt === "full") {
     drawCourt();
@@ -32,9 +39,6 @@ fullCourtImage.onload = () => {
 fullCourtImage.onerror = () => {
   console.error("全面コート画像の読み込み失敗");
 };
-
-// 半面コート画像
-const halfCourtImage = new Image();
 
 // 半面コート画像の読み込み完了時
 halfCourtImage.onload = () => {
@@ -50,15 +54,13 @@ halfCourtImage.onerror = () => {
   console.error("半面コート画像の読み込み失敗");
 };
 
-// 最後に画像の読み込みを開始
-fullCourtImage.src = "./バスケコート.png";
-halfCourtImage.src = "./ハーフコート.png";
 
-halfCourtImage.onload = () => {
-  if (currentCourt === "half") {
-    drawCourt();
-  }
-};
+
+// 画像ファイルを読み込む
+fullCourtImage.src = "./basketball-court.png";
+halfCourtImage.src = "./half-court.png";
+
+
 
 
 // ===================================
@@ -69,15 +71,6 @@ function drawCourt() {
 
   // drawCourt関数が実行されたことを確認
   console.log("drawCourtが実行されました");
-
-
-  // ===================================
-  // コートレイヤーを初期化
-  // ===================================
-
-  // removeChildren()を使うことで
-  // ベンチ選手そのものは削除せず、
-  // 一度レイヤーから外すだけにする
   courtLayer.removeChildren();
 
   // 現在選択されているコート画像を取得
@@ -86,32 +79,82 @@ function drawCourt() {
       ? fullCourtImage
       : halfCourtImage;
 
-  // コート画像を元の縦横比で表示
-  if (courtImage.complete && courtImage.naturalWidth > 0) {
+  // 画像のサイズを確認
+  console.log(
+    "画像の元サイズ:",
+    courtImage.naturalWidth,
+    courtImage.naturalHeight
+  );
 
-    const imageWidth = courtImage.naturalWidth;
-    const imageHeight = courtImage.naturalHeight;
+  console.log(
+    "作戦盤の基準サイズ:",
+    stageWidth,
+    stageHeight
+  );
 
-    // コート画像を作戦盤の範囲内に収める
-    const imageScale = Math.min(
-      (stageWidth - 145) / imageWidth,
-      stageHeight / imageHeight
-    );
+  // ===================================
+  // コートレイヤーを初期化
+  // ===================================
 
-    const displayWidth = imageWidth * imageScale;
-    const displayHeight = imageHeight * imageScale;
+  // ベンチ選手そのものは削除せず、
+  // 一度レイヤーから外すだけにする
+  courtLayer.removeChildren();
 
-    const konvaCourtImage = new Konva.Image({
-      image: courtImage,
-      x: 75 + (stageWidth - 145 - displayWidth) / 2,
-      y: (stageHeight - displayHeight) / 2,
-      width: displayWidth,
-      height: displayHeight,
-      listening: false
-    });
+  // コート画像の元サイズ
+  const imageWidth = courtImage.naturalWidth;
+  const imageHeight = courtImage.naturalHeight;
 
-    courtLayer.add(konvaCourtImage);
+  // 作戦盤のサイズ
+  const boardWidth = stageWidth;
+  const boardHeight = stageHeight;
+
+  // 基本倍率
+  const baseScale = Math.min(
+    boardWidth / imageWidth,
+    boardHeight / imageHeight
+  );
+
+  // 拡大倍率
+  const zoomRatio = 3.5;
+
+  // 最終倍率
+  const imageScale = baseScale * zoomRatio;
+
+  // 表示サイズ
+  const displayWidth = imageWidth * imageScale;
+  const displayHeight = imageHeight * imageScale;
+
+
+  // ===================================
+  // フルコートとハーフコートの位置補正
+  // ===================================
+
+  let courtOffsetX = 0;
+  let courtOffsetY = 50;
+
+  if (currentCourt === "half") {
+    // 画像内のコートのずれを倍率に合わせて補正
+    courtOffsetX = -20 * imageScale;
+    courtOffsetY = 50 - (94 * imageScale);
   }
+
+  // コート画像を配置
+  court = new Konva.Image({
+    image: courtImage,
+    x: (boardWidth - displayWidth) / 2 + courtOffsetX,
+    y: (boardHeight - displayHeight) / 2 + courtOffsetY,
+    width: displayWidth,
+    height: displayHeight,
+    listening: false
+  });
+
+  courtLayer.add(court);
+
+  // ===================================
+  // 古い選手の配列を空にする
+  // ===================================
+
+  players = [];
 
 
   // ===================================
@@ -243,6 +286,7 @@ function drawCourt() {
   drawLayer.draw();
 
 }
+
 
 
 // ===================================
