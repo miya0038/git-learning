@@ -57,8 +57,8 @@ halfCourtImage.onerror = () => {
 
 
 // 画像ファイルを読み込む
-fullCourtImage.src = "./basketball-court.png";
-halfCourtImage.src = "./half-court.png";
+fullCourtImage.src = "./basketball-court.svg";
+halfCourtImage.src = "./half-court.svg";
 
 
 
@@ -115,7 +115,7 @@ function drawCourt() {
   );
 
   // 拡大倍率
-  const zoomRatio = 3.5;
+  const zoomRatio = 4.0;
 
   // 最終倍率
   const imageScale = baseScale * zoomRatio;
@@ -129,13 +129,25 @@ function drawCourt() {
   // フルコートとハーフコートの位置補正
   // ===================================
 
-  let courtOffsetX = 0;
-  let courtOffsetY = 50;
+  // ===================================
+  // コートごとの位置調整
+  // ===================================
 
-  if (currentCourt === "half") {
-    // 画像内のコートのずれを倍率に合わせて補正
+  let courtOffsetX = 0;
+  let courtOffsetY = 0;
+
+  if (currentCourt === "full") {
+
+    // フルコート
+    courtOffsetX = 0;
+    courtOffsetY = 600;
+
+  } else if (currentCourt === "half") {
+
+    // ハーフコート
     courtOffsetX = -20 * imageScale;
-    courtOffsetY = 50 - (94 * imageScale);
+    courtOffsetY = 600 - (94 * imageScale);
+
   }
 
   // コート画像を配置

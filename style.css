@@ -100,3 +100,83 @@ input {
     min-height: 160px;
   }
 }
+
+
+/* フォーメーションのメニュー */
+.formation-dropdown {
+  display: inline-block;
+  position: relative;
+}
+
+/* メニューを開くボタン */
+.formation-dropdown summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 8px 14px;
+  border-radius: 5px;
+  background: #e2e8f0;
+  color: #222;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* メニューの中身 */
+.formation-content {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  min-width: 180px;
+  padding: 8px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* メニュー内のボタン */
+.formation-content button {
+  display: block;
+  width: 100%;
+  margin: 5px 0;
+}
+
+
+/* 描画メニュー */
+.draw-dropdown {
+  display: inline-block;
+  position: relative;
+}
+
+/* メニューを開くボタン */
+.draw-dropdown summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 8px 14px;
+  border-radius: 5px;
+  background: #e2e8f0;
+  color: #222;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* メニューの中身 */
+.draw-content {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  min-width: 180px;
+  padding: 8px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* メニュー内のボタン */
+.draw-content button {
+  display: block;
+  width: 100%;
+  margin: 5px 0;
+}

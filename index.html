@@ -8,7 +8,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- ブラウザのタブに表示されるタイトル -->
-  <title>複数スポーツ対応 作戦盤システム</title>
+  <title>作戦盤システム</title>
+
+  <!-- Webサイトの説明文 -->
+  <meta name="description" content="バスケットボールなど複数のスポーツに対応した作戦盤システムです。選手の配置や移動、作戦の記録などを簡単に操作できます。">
+
+  <!-- 検索エンジンに登録を許可 -->
+  <meta name="robots" content="index, follow">
+
+  <!-- サイトアイコン -->
+  <link rel="icon" href="favicon.ico">
+
   <!-- CSSファイルを読み込む -->
   <link rel="stylesheet" href="style.css">
 
@@ -32,28 +42,45 @@
       ハーフコート
     </button>
 
-    <button onclick="selectFormation()">
-      フォーメーション選択
-    </button>
 
-    <div id="formationMenu" style="display:none;">
+    <!-- フォーメーションメニュー -->
+    <details class="formation-dropdown">
 
+      <!-- メニューを開くボタン -->
+      <summary>
+        フォーメーション ▼
+      </summary>
 
-      <div id="formationList"></div>
+      <div class="formation-content">
 
-      <button onclick="closeFormationMenu()">
-        閉じる
-      </button>
-    </div>
+        <!-- フォーメーション選択 -->
+        <button onclick="selectFormation()">
+          フォーメーション選択
+        </button>
 
-    <!-- フォーメーションを追加するボタン -->
-    <button onclick="addFormation()">
-      フォーメーション追加
-    </button>
+        <!-- フォーメーション一覧 -->
+        <div id="formationMenu" style="display:none;">
+          <div id="formationList"></div>
 
-    <button onclick="deleteFormation()">
-      フォーメーション削除
-    </button>
+          <button onclick="closeFormationMenu()">
+            閉じる
+          </button>
+        </div>
+
+        <!-- フォーメーション追加 -->
+        <button onclick="addFormation()">
+          フォーメーション追加
+        </button>
+
+        <!-- フォーメーション削除 -->
+        <button onclick="deleteFormation()">
+          フォーメーション削除
+        </button>
+
+      </div>
+
+    </details>
+
 
     <!-- 直前に行った操作を取り消すボタン -->
     <button onclick="undoMove()">
@@ -67,25 +94,41 @@
 
 
 
-    <!-- 線を描く機能のON/OFFを切り替えるボタン -->
-    <button onclick="toggleDrawMode()">
-      線描画ON/OFF
-    </button>
 
-    <!-- 選択した線を1本削除するボタン -->
-    <button onclick="eraseLine()">
-      🧹 1本消す
-    </button>
+    <!-- 描画メニュー -->
+    <details class="draw-dropdown">
 
-    <!-- 作戦盤上にある線をすべて削除するボタン -->
-    <button onclick="clearLines()">
-      ❌ 線を全削除
-    </button>
+      <!-- メニューを開くボタン -->
+      <summary>
+        線描画 ▼
+      </summary>
 
-    <!-- 消しゴム機能のON/OFFを切り替えるボタン -->
-    <button onclick="toggleEraseMode()">
-      🧽 消しゴム
-    </button>
+      <div class="draw-content">
+
+        <!-- 線描画ON/OFF -->
+        <button onclick="toggleDrawMode()">
+          線描画ON/OFF
+        </button>
+
+        <!-- 選択した線を1本削除 -->
+        <button onclick="eraseLine()">
+          🧹 1本消す
+        </button>
+
+        <!-- 線をすべて削除 -->
+        <button onclick="clearLines()">
+          ❌ 線を全削除
+        </button>
+
+        <!-- 消しゴムON/OFF -->
+        <button onclick="toggleEraseMode()">
+          🧽 消しゴム
+        </button>
+
+      </div>
+
+    </details>
+
 
     <!-- 味方選手を1人追加するボタン -->
     <button onclick="addMyPlayer()">
